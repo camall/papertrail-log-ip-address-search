@@ -21,24 +21,27 @@ def valid_ip(address):
     except:
         return False
 
-def get_lines_with_ips_from_country(read_file, read_params, write_file, write_params, country)
-    with open(read_file,'rb') as tsvin, open(write_file, 'wb') as csvout:
+def get_lines_with_ips_from_country(read_file, read_params):
+    with open(read_file,read_params) as tsvin:
         tsvin = csv.reader(tsvin, delimiter='\t')
-        csvout = csv.writer(csvout)
         
         for row in tsvin:
+            yield tsvin.line_num, row
+    
+def write_lines_to_new_file(write_file, write_params, read_file, read_params, country):
+    with open(write_file, write_params) as csvout:
+        csvout = csv.writer(csvout)
+        for line_num,row in get_lines_with_ips_from_country(read_file, read_params):
             row_splitted = row[9].split(' ')
             for split in row_splitted:
                 if valid_ip(split) and len(split) > 5:
-                 if find_country(split) == country: 
-                    csvout.writerow([tsvin.line_num, row[9]])
+                    if find_country(split) == country: 
+                        csvout.writerow([line_num, row[9]])
 
-dates = ['10-27','10-28','10-29','10-30','10-31','11-01','11-02']
-
-get_lines_with_ips_from_uk('2016-10-27.tsv', 'rb', 'united-kingdom-10-27.csv', 'wb', 'United Kingdom')
-get_lines_with_ips_from_uk('2016-10-28.tsv', 'rb', 'united-kingdom-10-28.csv', 'wb', 'United Kingdom')
-get_lines_with_ips_from_uk('2016-10-29.tsv', 'rb', 'united-kingdom-10-29.csv', 'wb', 'United Kingdom')
-get_lines_with_ips_from_uk('2016-10-30.tsv', 'rb', 'united-kingdom-10-30.csv', 'wb', 'United Kingdom')
-get_lines_with_ips_from_uk('2016-10-31.tsv', 'rb', 'united-kingdom-10-31.csv', 'wb', 'United Kingdom')
-get_lines_with_ips_from_uk('2016-11-01.tsv', 'rb', 'united-kingdom-11-01.csv', 'wb', 'United Kingdom')
-get_lines_with_ips_from_uk('2016-11-02.tsv', 'rb', 'united-kingdom-11-02.csv', 'wb', 'United Kingdom')
+write_lines_to_new_file('united-kingdom-10-27.csv', 'wb', '2016-10-27.tsv', 'rb', 'United Kingdom')
+write_lines_to_new_file('united-kingdom-10-28.csv', 'wb', '2016-10-28.tsv', 'rb', 'United Kingdom')
+write_lines_to_new_file('united-kingdom-10-29.csv', 'wb', '2016-10-29.tsv', 'rb', 'United Kingdom')
+write_lines_to_new_file('united-kingdom-10-30.csv', 'wb', '2016-10-30.tsv', 'rb', 'United Kingdom')
+write_lines_to_new_file('united-kingdom-10-31.csv', 'wb', '2016-10-31.tsv', 'rb', 'United Kingdom')
+write_lines_to_new_file('united-kingdom-11-01.csv', 'wb', '2016-11-01.tsv', 'rb', 'United Kingdom')
+write_lines_to_new_file('united-kingdom-11-02.csv', 'wb', '2016-11-02.tsv', 'rb', 'United Kingdom')
