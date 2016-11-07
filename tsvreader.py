@@ -21,7 +21,7 @@ def valid_ip(address):
     except:
         return False
 
-def get_lines_with_ips_from_uk(read_file, read_params, write_file, write_params)
+def get_lines_with_ips_from_country(read_file, read_params, write_file, write_params, country)
     with open(read_file,'rb') as tsvin, open(write_file, 'wb') as csvout:
         tsvin = csv.reader(tsvin, delimiter='\t')
         csvout = csv.writer(csvout)
@@ -30,15 +30,15 @@ def get_lines_with_ips_from_uk(read_file, read_params, write_file, write_params)
             row_splitted = row[9].split(' ')
             for split in row_splitted:
                 if valid_ip(split) and len(split) > 5:
-                 if find_country(split) == 'United Kingdom': 
+                 if find_country(split) == country: 
                     csvout.writerow([tsvin.line_num, row[9]])
 
 dates = ['10-27','10-28','10-29','10-30','10-31','11-01','11-02']
 
-get_lines_with_ips_from_uk('2016-10-27.tsv', 'rb', 'united-kingdom-10-27.csv', 'wb')
-get_lines_with_ips_from_uk('2016-10-28.tsv', 'rb', 'united-kingdom-10-28.csv', 'wb')
-get_lines_with_ips_from_uk('2016-10-29.tsv', 'rb', 'united-kingdom-10-29.csv', 'wb')
-get_lines_with_ips_from_uk('2016-10-30.tsv', 'rb', 'united-kingdom-10-30.csv', 'wb')
-get_lines_with_ips_from_uk('2016-10-31.tsv', 'rb', 'united-kingdom-10-31.csv', 'wb')
-get_lines_with_ips_from_uk('2016-11-01.tsv', 'rb', 'united-kingdom-11-01.csv', 'wb')
-get_lines_with_ips_from_uk('2016-11-02.tsv', 'rb', 'united-kingdom-11-02.csv', 'wb')
+get_lines_with_ips_from_uk('2016-10-27.tsv', 'rb', 'united-kingdom-10-27.csv', 'wb', 'United Kingdom')
+get_lines_with_ips_from_uk('2016-10-28.tsv', 'rb', 'united-kingdom-10-28.csv', 'wb', 'United Kingdom')
+get_lines_with_ips_from_uk('2016-10-29.tsv', 'rb', 'united-kingdom-10-29.csv', 'wb', 'United Kingdom')
+get_lines_with_ips_from_uk('2016-10-30.tsv', 'rb', 'united-kingdom-10-30.csv', 'wb', 'United Kingdom')
+get_lines_with_ips_from_uk('2016-10-31.tsv', 'rb', 'united-kingdom-10-31.csv', 'wb', 'United Kingdom')
+get_lines_with_ips_from_uk('2016-11-01.tsv', 'rb', 'united-kingdom-11-01.csv', 'wb', 'United Kingdom')
+get_lines_with_ips_from_uk('2016-11-02.tsv', 'rb', 'united-kingdom-11-02.csv', 'wb', 'United Kingdom')
